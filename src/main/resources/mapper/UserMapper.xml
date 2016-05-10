@@ -1,0 +1,451 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.spring.ysj.sample.dao.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="org.spring.ysj.sample.model.entity.User" >
+    <id column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="account" property="account" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="pass" property="pass" jdbcType="VARCHAR" />
+    <result column="login_lastip" property="loginLastip" jdbcType="INTEGER" />
+    <result column="login_count" property="loginCount" jdbcType="INTEGER" />
+    <result column="login_lasttime" property="loginLasttime" jdbcType="TIMESTAMP" />
+    <result column="parent1" property="parent1" jdbcType="INTEGER" />
+    <result column="parent2" property="parent2" jdbcType="INTEGER" />
+    <result column="parent3" property="parent3" jdbcType="INTEGER" />
+    <result column="is_partner" property="isPartner" jdbcType="TINYINT" />
+    <result column="is_agent" property="isAgent" jdbcType="TINYINT" />
+    <result column="is_member" property="isMember" jdbcType="TINYINT" />
+    <result column="is_service" property="isService" jdbcType="TINYINT" />
+    <result column="with_partner" property="withPartner" jdbcType="INTEGER" />
+    <result column="with_agent" property="withAgent" jdbcType="INTEGER" />
+    <result column="money" property="money" jdbcType="DOUBLE" />
+    <result column="member_time" property="memberTime" jdbcType="TIMESTAMP" />
+    <result column="expire_time" property="expireTime" jdbcType="TIMESTAMP" />
+    <result column="src" property="src" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uid, account, name, pass, login_lastip, login_count, login_lasttime, parent1, parent2, 
+    parent3, is_partner, is_agent, is_member, is_service, with_partner, with_agent, money, 
+    member_time, expire_time, src
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="org.spring.ysj.sample.model.entity.UserCriteria" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <if test="limitStart != null and limitStart>-1" >
+      limit ${limitStart} , ${limitEnd}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where uid = #{uid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user
+    where uid = #{uid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="org.spring.ysj.sample.model.entity.UserCriteria" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="org.spring.ysj.sample.model.entity.User" >
+    insert into user (uid, account, name, 
+      pass, login_lastip, login_count, 
+      login_lasttime, parent1, parent2, 
+      parent3, is_partner, is_agent, 
+      is_member, is_service, with_partner, 
+      with_agent, money, member_time, 
+      expire_time, src)
+    values (#{uid,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{pass,jdbcType=VARCHAR}, #{loginLastip,jdbcType=INTEGER}, #{loginCount,jdbcType=INTEGER}, 
+      #{loginLasttime,jdbcType=TIMESTAMP}, #{parent1,jdbcType=INTEGER}, #{parent2,jdbcType=INTEGER}, 
+      #{parent3,jdbcType=INTEGER}, #{isPartner,jdbcType=TINYINT}, #{isAgent,jdbcType=TINYINT}, 
+      #{isMember,jdbcType=TINYINT}, #{isService,jdbcType=TINYINT}, #{withPartner,jdbcType=INTEGER}, 
+      #{withAgent,jdbcType=INTEGER}, #{money,jdbcType=DOUBLE}, #{memberTime,jdbcType=TIMESTAMP}, 
+      #{expireTime,jdbcType=TIMESTAMP}, #{src,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="org.spring.ysj.sample.model.entity.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="account != null" >
+        account,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="pass != null" >
+        pass,
+      </if>
+      <if test="loginLastip != null" >
+        login_lastip,
+      </if>
+      <if test="loginCount != null" >
+        login_count,
+      </if>
+      <if test="loginLasttime != null" >
+        login_lasttime,
+      </if>
+      <if test="parent1 != null" >
+        parent1,
+      </if>
+      <if test="parent2 != null" >
+        parent2,
+      </if>
+      <if test="parent3 != null" >
+        parent3,
+      </if>
+      <if test="isPartner != null" >
+        is_partner,
+      </if>
+      <if test="isAgent != null" >
+        is_agent,
+      </if>
+      <if test="isMember != null" >
+        is_member,
+      </if>
+      <if test="isService != null" >
+        is_service,
+      </if>
+      <if test="withPartner != null" >
+        with_partner,
+      </if>
+      <if test="withAgent != null" >
+        with_agent,
+      </if>
+      <if test="money != null" >
+        money,
+      </if>
+      <if test="memberTime != null" >
+        member_time,
+      </if>
+      <if test="expireTime != null" >
+        expire_time,
+      </if>
+      <if test="src != null" >
+        src,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="account != null" >
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pass != null" >
+        #{pass,jdbcType=VARCHAR},
+      </if>
+      <if test="loginLastip != null" >
+        #{loginLastip,jdbcType=INTEGER},
+      </if>
+      <if test="loginCount != null" >
+        #{loginCount,jdbcType=INTEGER},
+      </if>
+      <if test="loginLasttime != null" >
+        #{loginLasttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parent1 != null" >
+        #{parent1,jdbcType=INTEGER},
+      </if>
+      <if test="parent2 != null" >
+        #{parent2,jdbcType=INTEGER},
+      </if>
+      <if test="parent3 != null" >
+        #{parent3,jdbcType=INTEGER},
+      </if>
+      <if test="isPartner != null" >
+        #{isPartner,jdbcType=TINYINT},
+      </if>
+      <if test="isAgent != null" >
+        #{isAgent,jdbcType=TINYINT},
+      </if>
+      <if test="isMember != null" >
+        #{isMember,jdbcType=TINYINT},
+      </if>
+      <if test="isService != null" >
+        #{isService,jdbcType=TINYINT},
+      </if>
+      <if test="withPartner != null" >
+        #{withPartner,jdbcType=INTEGER},
+      </if>
+      <if test="withAgent != null" >
+        #{withAgent,jdbcType=INTEGER},
+      </if>
+      <if test="money != null" >
+        #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="memberTime != null" >
+        #{memberTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null" >
+        #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="src != null" >
+        #{src,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="org.spring.ysj.sample.model.entity.UserCriteria" resultType="java.lang.Integer" >
+    select count(*) from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.uid != null" >
+        uid = #{record.uid,jdbcType=INTEGER},
+      </if>
+      <if test="record.account != null" >
+        account = #{record.account,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.pass != null" >
+        pass = #{record.pass,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginLastip != null" >
+        login_lastip = #{record.loginLastip,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginCount != null" >
+        login_count = #{record.loginCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.loginLasttime != null" >
+        login_lasttime = #{record.loginLasttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.parent1 != null" >
+        parent1 = #{record.parent1,jdbcType=INTEGER},
+      </if>
+      <if test="record.parent2 != null" >
+        parent2 = #{record.parent2,jdbcType=INTEGER},
+      </if>
+      <if test="record.parent3 != null" >
+        parent3 = #{record.parent3,jdbcType=INTEGER},
+      </if>
+      <if test="record.isPartner != null" >
+        is_partner = #{record.isPartner,jdbcType=TINYINT},
+      </if>
+      <if test="record.isAgent != null" >
+        is_agent = #{record.isAgent,jdbcType=TINYINT},
+      </if>
+      <if test="record.isMember != null" >
+        is_member = #{record.isMember,jdbcType=TINYINT},
+      </if>
+      <if test="record.isService != null" >
+        is_service = #{record.isService,jdbcType=TINYINT},
+      </if>
+      <if test="record.withPartner != null" >
+        with_partner = #{record.withPartner,jdbcType=INTEGER},
+      </if>
+      <if test="record.withAgent != null" >
+        with_agent = #{record.withAgent,jdbcType=INTEGER},
+      </if>
+      <if test="record.money != null" >
+        money = #{record.money,jdbcType=DOUBLE},
+      </if>
+      <if test="record.memberTime != null" >
+        member_time = #{record.memberTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expireTime != null" >
+        expire_time = #{record.expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.src != null" >
+        src = #{record.src,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user
+    set uid = #{record.uid,jdbcType=INTEGER},
+      account = #{record.account,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      pass = #{record.pass,jdbcType=VARCHAR},
+      login_lastip = #{record.loginLastip,jdbcType=INTEGER},
+      login_count = #{record.loginCount,jdbcType=INTEGER},
+      login_lasttime = #{record.loginLasttime,jdbcType=TIMESTAMP},
+      parent1 = #{record.parent1,jdbcType=INTEGER},
+      parent2 = #{record.parent2,jdbcType=INTEGER},
+      parent3 = #{record.parent3,jdbcType=INTEGER},
+      is_partner = #{record.isPartner,jdbcType=TINYINT},
+      is_agent = #{record.isAgent,jdbcType=TINYINT},
+      is_member = #{record.isMember,jdbcType=TINYINT},
+      is_service = #{record.isService,jdbcType=TINYINT},
+      with_partner = #{record.withPartner,jdbcType=INTEGER},
+      with_agent = #{record.withAgent,jdbcType=INTEGER},
+      money = #{record.money,jdbcType=DOUBLE},
+      member_time = #{record.memberTime,jdbcType=TIMESTAMP},
+      expire_time = #{record.expireTime,jdbcType=TIMESTAMP},
+      src = #{record.src,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="org.spring.ysj.sample.model.entity.User" >
+    update user
+    <set >
+      <if test="account != null" >
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="pass != null" >
+        pass = #{pass,jdbcType=VARCHAR},
+      </if>
+      <if test="loginLastip != null" >
+        login_lastip = #{loginLastip,jdbcType=INTEGER},
+      </if>
+      <if test="loginCount != null" >
+        login_count = #{loginCount,jdbcType=INTEGER},
+      </if>
+      <if test="loginLasttime != null" >
+        login_lasttime = #{loginLasttime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="parent1 != null" >
+        parent1 = #{parent1,jdbcType=INTEGER},
+      </if>
+      <if test="parent2 != null" >
+        parent2 = #{parent2,jdbcType=INTEGER},
+      </if>
+      <if test="parent3 != null" >
+        parent3 = #{parent3,jdbcType=INTEGER},
+      </if>
+      <if test="isPartner != null" >
+        is_partner = #{isPartner,jdbcType=TINYINT},
+      </if>
+      <if test="isAgent != null" >
+        is_agent = #{isAgent,jdbcType=TINYINT},
+      </if>
+      <if test="isMember != null" >
+        is_member = #{isMember,jdbcType=TINYINT},
+      </if>
+      <if test="isService != null" >
+        is_service = #{isService,jdbcType=TINYINT},
+      </if>
+      <if test="withPartner != null" >
+        with_partner = #{withPartner,jdbcType=INTEGER},
+      </if>
+      <if test="withAgent != null" >
+        with_agent = #{withAgent,jdbcType=INTEGER},
+      </if>
+      <if test="money != null" >
+        money = #{money,jdbcType=DOUBLE},
+      </if>
+      <if test="memberTime != null" >
+        member_time = #{memberTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expireTime != null" >
+        expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="src != null" >
+        src = #{src,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.spring.ysj.sample.model.entity.User" >
+    update user
+    set account = #{account,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      pass = #{pass,jdbcType=VARCHAR},
+      login_lastip = #{loginLastip,jdbcType=INTEGER},
+      login_count = #{loginCount,jdbcType=INTEGER},
+      login_lasttime = #{loginLasttime,jdbcType=TIMESTAMP},
+      parent1 = #{parent1,jdbcType=INTEGER},
+      parent2 = #{parent2,jdbcType=INTEGER},
+      parent3 = #{parent3,jdbcType=INTEGER},
+      is_partner = #{isPartner,jdbcType=TINYINT},
+      is_agent = #{isAgent,jdbcType=TINYINT},
+      is_member = #{isMember,jdbcType=TINYINT},
+      is_service = #{isService,jdbcType=TINYINT},
+      with_partner = #{withPartner,jdbcType=INTEGER},
+      with_agent = #{withAgent,jdbcType=INTEGER},
+      money = #{money,jdbcType=DOUBLE},
+      member_time = #{memberTime,jdbcType=TIMESTAMP},
+      expire_time = #{expireTime,jdbcType=TIMESTAMP},
+      src = #{src,jdbcType=VARCHAR}
+    where uid = #{uid,jdbcType=INTEGER}
+  </update>
+</mapper>
