@@ -43,6 +43,6 @@ public class TestCotroller {
 
     @RequestMapping(value = "/exception", method = RequestMethod.GET)
     public void exception() {
-    	throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, "a", "aa");
+    	throw new RestException(HttpStatus.INTERNAL_SERVER_ERROR, "a", "aaa");
     }
 }
